@@ -1,11 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons'
-import home from '../images/home.jpg';
+
+// components
+import home from '../../images/home.jpg';
 
 function LoginForm() {
   return (
-    <section className="vh-100" style={{backgroundColor: '#DC649E'}}>
+    <section className="vh-100" >
         <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col col-xl-10">
@@ -17,7 +19,7 @@ function LoginForm() {
                             <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div className="card-body p-4 p-lg-5 text-black">
                                     <form>
-                                        <div className="d-flex align-items-center mb-3 pb-1" style={{color: "#DC649E", fontSize: "1.8em"}}>
+                                        <div className="d-flex align-items-center mb-3 pb-1" style={{color: "#E19180", fontSize: "1.8em"}}>
                                             <FontAwesomeIcon icon={faPen} style={{ marginRight: "0.2em" }} />
                                             <span className="h1 fw-bold mb-0">Notehome</span>
                                         </div>
@@ -29,7 +31,7 @@ function LoginForm() {
                                             <input type="password" id="form2Example27" autoComplete='false' className="form-control form-control-lg" placeholder='Mot de passe' />
                                         </div>
                                         <div className="pt-1 mb-4">
-                                            <button className="btn btn-dark btn-lg btn-block" type="button" style={{ backgroundColor: "#DC649E", width: "100%" }} >Connexion</button>
+                                            <button className="btn btn-dark btn-lg btn-block" type="button" style={{ backgroundColor: "#E19180", width: "100%" }} >Connexion</button>
                                         </div>
                                         <a className="small text-muted" href="#!">Mot de passe oublié ?</a>
                                         <p className="mb-5 pb-lg-2" style={{color: "#393f81"}} >Pase encore de compte ? <a href="https://bennaneweb.fr/#contact" target="_blank" rel="noreferrer"
