@@ -3,23 +3,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 
 // packages
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
 
 // components
 import home from '../../images/home.jpg';
+import { signInUser } from '../../services/bw/auth';
 
 const LoginForm = () => {
     const id = useId();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("token");
+        if (loggedInUser) {
+            navigate("/");
+        }
+    }, [navigate]);
 
     const contactFormSchema = Yup.object().shape({
-		email: Yup.string().email().required(),
+		username: Yup.string().required(),
         password: Yup.string().required(),
 	});
 
-    const handleSubmitForm = (value) => {
-		console.log(value);
+    const handleSubmitForm = async (values) => {
+        await signInUser({
+            username: values.username,
+            password: values.password
+        });
+
+        if (localStorage.getItem('token')) {
+			navigate("/");
+		} else {
+            //TODO: mesage d erreur de connexion ici
+            console.error('oups...')
+        }
 	}
 
     return (
@@ -43,7 +63,7 @@ const LoginForm = () => {
 
                                         <Formik
                                             initialValues={{
-                                                email: '',
+                                                username: '',
                                                 password: '',
                                                 remember: false
                                             }}
@@ -56,10 +76,10 @@ const LoginForm = () => {
                                                         <div className="form-outline mb-4">
                                                             <Field
                                                                 type='text'
-                                                                id={`${id}-email`}
-                                                                style={{borderColor: errors.email && touched.email ? "darkred" : "#ccc"}}
-                                                                name='email' 
-                                                                placeholder='Adresse email'
+                                                                id={`${id}-username`}
+                                                                style={{borderColor: errors.username && touched.username ? "darkred" : "#ccc"}}
+                                                                name='username'
+                                                                placeholder='Utilisateur'
                                                                 className="form-control form-control-lg" />
                                                         </div>
                                                         <div className="form-outline mb-4">
@@ -76,7 +96,7 @@ const LoginForm = () => {
                                                         <div className="pt-1 mb-4">
                                                             <button
                                                                 type="submit"
-                                                                disabled={errors.email || errors.password || '' === values.email || '' === values.password}
+                                                                disabled={errors.username || errors.password || '' === values.username || '' === values.password}
                                                                 className="btn btn-dark btn-lg btn-block"
                                                                 style={{ backgroundColor: "#E19180", width: "100%" }}
                                                             >Connexion</button>
