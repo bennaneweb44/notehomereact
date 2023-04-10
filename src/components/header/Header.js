@@ -10,17 +10,14 @@ const Header = () => {
 		}
 		setTimeout(() => {
 			navigate('/login')
-		}, 3000);
+		}, 1000);
 	}
 
 	return (
 		<header>
-			<h2>Menu</h2>
+			<h4>Gestion des catégories</h4>
 			<nav>
 				<ul>
-					<li>
-						<Link to={ '/' }>Home</Link>
-					</li>
 					<li>
 						<Link to={ '/' } onClick={handleDisconnect}>Se déconnecter</Link>
 					</li>

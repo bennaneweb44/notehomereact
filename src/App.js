@@ -2,12 +2,13 @@ import './App.css';
 
 // packages
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 // components
 import LoginForm from './components/auth/LoginForm';
 import Home from './components/Home';
 import Header from './components/header/Header';
-import { useEffect, useState } from 'react';
+import Categories from './components/categories/Categories'
 
 function App() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function App() {
     const loggedInUser = localStorage.getItem("token");
     if (loggedInUser) {
       setAuthenticated(loggedInUser);
-      navigate('/');
+      navigate('/categories');
     }else {
       setAuthenticated(null);
       navigate('/login');
@@ -32,6 +33,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/categories" element={<Categories />} />
             </Routes>
           </>
         :
