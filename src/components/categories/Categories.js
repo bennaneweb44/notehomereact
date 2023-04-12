@@ -40,7 +40,9 @@ const Categories = () => {
     const afterOpenModal = () => {
         // references are now sync'd and can be accessed.
         if (currentCategory.id > 0) {
-            setColor(currentCategory.couleur)
+            setColor(currentCategory.couleur);
+        } else {
+            setDisabled(false);
         }
     }
 
@@ -118,9 +120,10 @@ const Categories = () => {
                     <label className='mt-2 mb-2 h-10 w-100' style={{ color: 'transparent', backgroundColor: color }}>.</label>
 
                     <label className="switch">
-                        <input ref={disabledCategorie} type="checkbox" onChange={ handleChangeChecked } defaultChecked={currentCategory.disabled} />
+                        <input ref={disabledCategorie} type="checkbox" onChange={ handleChangeChecked } defaultChecked={currentCategory.id > 0 ? currentCategory.disabled : false} />
                         <span className="slider round"></span>
                     </label>
+                    <span>Désactivé</span>
 
                     <button className='btn w-100 btn-primary mt-2' onClick={( validateCategory )}>Valider</button>
                     {currentCategory.id > 0 &&
