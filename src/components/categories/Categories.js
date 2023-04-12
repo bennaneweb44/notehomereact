@@ -75,6 +75,16 @@ const Categories = () => {
         }
     }
 
+    const removeCategory = (e) => {
+        e.preventDefault();
+
+        const copyCategories = [...categories];
+        let foundIndex = categories.findIndex(x => x.id === currentCategory.id);
+        copyCategories.splice(foundIndex, 1)
+        setCategories(copyCategories)
+        setIsOpen(false);
+    }
+
     return (
         <>
             <section className="vh-50" >
@@ -113,6 +123,9 @@ const Categories = () => {
                     </label>
 
                     <button className='btn w-100 btn-primary mt-2' onClick={( validateCategory )}>Valider</button>
+                    {currentCategory.id > 0 &&
+                        <button className='btn w-100 btn-danger mt-2' onClick={( removeCategory )}>Supprimer</button>
+                    }
                 </Modal>
             </section>
         </>
