@@ -26,9 +26,9 @@ const Categories = () => {
     const disabledCategorie = useRef('');
 
     const [color, setColor] = useState("#aabbcc");
-    const [disabled, setDisabled] = useState(currentCategory.disabled)
+    const [disabled, setDisabled] = useState(currentCategory.id > 0 ? currentCategory.disabled: false)
 
-    const openModal = (category) => {
+    const openModal = (category = {}) => {
         setIsOpen(true);
         setCurrentCategory(category);
     }
@@ -39,7 +39,9 @@ const Categories = () => {
 
     const afterOpenModal = () => {
         // references are now sync'd and can be accessed.
-        setColor(currentCategory.couleur)
+        if (currentCategory.id > 0) {
+            setColor(currentCategory.couleur)
+        }
     }
 
     const handleChangeChecked = () => {
@@ -59,8 +61,15 @@ const Categories = () => {
                 disabled: disabled
             }
             const copyCategories = [...categories];
-            let foundIndex = categories.findIndex(x => x.id === updatedCategory.id);
-            copyCategories[foundIndex] = updatedCategory;
+            if (undefined === currentCategory.id) {
+                // Add
+                updatedCategory.id = new Date();
+                copyCategories.push(updatedCategory)
+            } else {
+                // update
+                let foundIndex = categories.findIndex(x => x.id === updatedCategory.id);
+                copyCategories[foundIndex] = updatedCategory;
+            }
             setCategories(copyCategories)
             setIsOpen(false);
         }
@@ -71,6 +80,9 @@ const Categories = () => {
             <section className="vh-50" >
                 <div className="container py-5 h-100">
                     <div className="list-group">
+                        <div className='text-right'>
+                            <button className='col-1 btn btn-primary mb-3' style={{ float: 'right' }} onClick={( openModal )}>Ajout</button>
+                        </div>
                         {categories.map((category, index) => (
                             <button 
                                 key={index}
@@ -90,7 +102,7 @@ const Categories = () => {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <h5 className="mb-4">Modification</h5>
+                    <h5 className="mb-4">{currentCategory.id > 0 ? 'Modification' : 'Ajout'}</h5>
                     <input ref={nomCategorie} style={{ width: '100%' }} defaultValue={currentCategory.nom} />
                     <HexColorPicker style={{ width: '100%' }} className='mt-2' color={color} onChange={ setColor } />
                     <label className='mt-2 mb-2 h-10 w-100' style={{ color: 'transparent', backgroundColor: color }}>.</label>
