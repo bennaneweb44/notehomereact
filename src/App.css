@@ -109,3 +109,11 @@ input:checked + .slider:before {
   background-color: #ddd !important;
   color: #aaa !important;
 }
+
+.btn-action {
+  width: '4%';
+  color: 'black';
+  background-color: #ddd !important;
+  border: 1px solid #aaa !important;
+  padding: 5;
+}

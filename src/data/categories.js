@@ -13,7 +13,7 @@ const DATA_CATEGORIES = [
 	},
     {
 		id: 3,
-		nom: "Santé",
+		nom: "Loisir",
 		couleur: "#63B4F4",
 		disabled: false
 	},

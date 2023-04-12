@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import { HexColorPicker } from "react-colorful";
 import DATA_CATEGORIES from '../../data/categories';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const customStyles = {
     content: {
@@ -77,11 +79,9 @@ const Categories = () => {
         }
     }
 
-    const removeCategory = (e) => {
-        e.preventDefault();
-
+    const removeCategory = (id) => {
         const copyCategories = [...categories];
-        let foundIndex = categories.findIndex(x => x.id === currentCategory.id);
+        let foundIndex = categories.findIndex(x => x.id === id);
         copyCategories.splice(foundIndex, 1)
         setCategories(copyCategories)
         setIsOpen(false);
@@ -96,14 +96,26 @@ const Categories = () => {
                             <button className='col-1 btn btn-primary mb-3' style={{ float: 'right' }} onClick={( openModal )}>Ajout</button>
                         </div>
                         {categories.map((category, index) => (
-                            <button 
-                                key={index}
-                                className={`list-group-item list-group-item-action ${category.disabled ? "bg-disabled" : ""}`}
-                                style={{ backgroundColor: category.couleur }}
-                                onClick={() => openModal(category)}
-                                >
-                                    {category.nom}
-                            </button>
+                            <div key={index} className="btn-group " data-toggle="buttons">
+                                <span
+                                    className={`list-group-item list-group-item-action ${category.disabled ? "bg-disabled" : ""}`}
+                                    style={{ width: '90%', backgroundColor: category.couleur }}
+                                    >
+                                        {category.nom}
+                                </span>
+                                <button
+                                    className="btn btn-default float-end btn-action"
+                                    onClick={ () => openModal(category) }
+                                    >
+                                    <FontAwesomeIcon icon={faPencil} style={{ marginRight: "0.2em" }} />
+                                </button>
+                                <button
+                                    className="btn btn-default float-end btn-action"
+                                    onClick={ () => removeCategory(category.id) }
+                                    >
+                                    <FontAwesomeIcon icon={faTrash} style={{ marginRight: "0.2em" }} />
+                                </button>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -126,9 +138,6 @@ const Categories = () => {
                     <span>Désactivé</span>
 
                     <button className='btn w-100 btn-primary mt-2' onClick={( validateCategory )}>Valider</button>
-                    {currentCategory.id > 0 &&
-                        <button className='btn w-100 btn-danger mt-2' onClick={( removeCategory )}>Supprimer</button>
-                    }
                 </Modal>
             </section>
         </>
