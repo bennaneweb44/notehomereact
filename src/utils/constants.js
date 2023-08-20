@@ -1,5 +1,5 @@
 // URI
-export const BW_URI_PREFIX = "https://services.bennaneweb.fr"
+export const BW_URI_PREFIX = "https://services.aziz-bennane.fr"
 
 export const URI_USER_AUTHENTICATION = "/authentication"
 export const URI_USERS = "/api/users"

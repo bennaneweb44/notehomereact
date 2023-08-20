@@ -11,10 +11,14 @@ import { useNavigate } from "react-router-dom";
 // components
 import home from '../../images/home.jpg';
 import { signInUser } from '../../services/bw/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLoading, setIsNotLoading } from '../../store/slices/loadingSlice';
 
 const LoginForm = () => {
     const id = useId();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const loading = useSelector((state) => state.loading.value);
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("token");
@@ -29,6 +33,8 @@ const LoginForm = () => {
 	});
 
     const handleSubmitForm = async (values) => {
+        dispatch(setIsLoading());
+
         await signInUser({
             username: values.username,
             password: values.password
@@ -40,6 +46,8 @@ const LoginForm = () => {
             //TODO: mesage d erreur de connexion ici
             console.error('oups...')
         }
+
+        dispatch(setIsNotLoading());
 	}
 
     return (
@@ -96,10 +104,10 @@ const LoginForm = () => {
                                                         <div className="pt-1 mb-4">
                                                             <button
                                                                 type="submit"
-                                                                disabled={errors.username || errors.password || '' === values.username || '' === values.password}
+                                                                disabled={errors.username || errors.password || '' === values.username || '' === values.password || loading}
                                                                 className="btn btn-dark btn-lg btn-block"
                                                                 style={{ backgroundColor: "#E19180", width: "100%" }}
-                                                            >Connexion</button>
+                                                            >{loading ? 'Patientez ...' : 'Connexion'}</button>
                                                         </div>
                                                     </Form>
                                                 )
@@ -107,7 +115,7 @@ const LoginForm = () => {
                                         </Formik>
 
                                         <a className="small text-muted" href="#!">Mot de passe oublié ?</a>
-                                        <p className="mb-5 pb-lg-2" style={{color: "#393f81"}} >Pase encore de compte ? <a href="https://bennaneweb.fr/#contact" target="_blank" rel="noreferrer"
+                                        <p className="mb-5 pb-lg-2" style={{color: "#393f81"}} >Pase encore de compte ? <a href="https://aziz-bennane.fr/#contact" target="_blank" rel="noreferrer"
                                             style={{color: "#393f81"}} >Me contacter</a>
                                         </p>
                                         <a href="#!" className="small text-muted">Conditions d'utilisation.</a>
